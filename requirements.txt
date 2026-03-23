@@ -1,0 +1,19 @@
+# AutoFlow Phase 1 - Core Dependencies
+# Tested with Python 3.13
+
+# Server
+fastapi==0.115.12
+uvicorn[standard]==0.34.0
+
+# AI / LLM  (newer langchain no longer requires numpy<2)
+langchain==0.3.23
+langchain-community==0.3.21
+langchain-ollama==0.3.2
+
+# Desktop Automation
+pyautogui==0.9.54
+screeninfo==0.8.1
+
+# Web Browser Automation
+playwright==1.44.0
+

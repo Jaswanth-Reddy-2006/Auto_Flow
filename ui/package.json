@@ -1,0 +1,24 @@
+{
+  "name": "autoflow-ui",
+  "version": "0.1.0",
+  "description": "AutoFlow Desktop Chat Interface",
+  "main": "electron.cjs",
+  "scripts": {
+    "dev": "concurrently -k \"vite\" \"wait-on http://localhost:5173 && electron .\"",
+    "build": "vite build",
+    "preview": "vite preview",
+    "electron": "electron ."
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "concurrently": "^8.2.2",
+    "electron": "^31.0.2",
+    "vite": "^5.3.1",
+    "wait-on": "^7.2.0"
+  }
+}

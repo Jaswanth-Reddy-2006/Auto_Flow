@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+venv/
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Outputs & Temp
+outputs/
+*.log
+.env
+
+# Build outputs
+dist/
+build/
+*.exe
+*.dll
+
+# OS/IDE specific
+.vscode/
+.idea/
+Thumbs.db
