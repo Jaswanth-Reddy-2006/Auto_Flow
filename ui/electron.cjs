@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, session } = require('electron')
 const path = require('path')
 
 app.commandLine.appendSwitch('disable-gpu')
@@ -11,13 +11,13 @@ let win = null
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 900,
-    height: 680,
-    minWidth: 600,
-    minHeight: 500,
+    width: 1000,
+    height: 750,
+    minWidth: 800,
+    minHeight: 600,
     frame: false,
     transparent: false,
-    backgroundColor: '#0d0d0d',
+    backgroundColor: '#050505',
     title: "AutoFlow",
     webPreferences: {
       nodeIntegration: true,
@@ -25,6 +25,7 @@ function createWindow() {
       sandbox: false,
     },
   })
+
 
   if (isDev) {
     win.loadURL('http://localhost:5173')

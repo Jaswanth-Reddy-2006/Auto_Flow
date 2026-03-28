@@ -1,0 +1,61 @@
+Policy set to Proactor. Current: <class 'asyncio.windows_events.WindowsProactorEventLoopPolicy'>
+Policy set to Proactor. Current: <class 'asyncio.windows_events.WindowsProactorEventLoopPolicy'>
+STARTUP: Running Loop: <class 'asyncio.windows_events._WindowsSelectorEventLoop'>
+WARNING: NOT USING PROACTOR LOOP! Subprocesses will fail.
+Error forcing proactor loop: module 'asyncio' has no attribute 'WindowsProactorEventLoop'
+STARTUP: Running Loop: <class 'asyncio.windows_events._WindowsSelectorEventLoop'>
+WARNING: NOT USING PROACTOR LOOP! Subprocesses will fail.
+Error forcing proactor loop: module 'asyncio' has no attribute 'WindowsProactorEventLoop'
+STARTUP: Running Loop: <class 'asyncio.windows_events.ProactorEventLoop'>
+Error forcing proactor loop: module 'asyncio' has no attribute 'WindowsProactorEventLoop'
+STARTUP: App version 6.0 initialized.
+SHUTDOWN: Browser resources released.
+Error forcing proactor loop: module 'asyncio' has no attribute 'WindowsProactorEventLoop'
+STARTUP: App version 6.0 initialized.
+SHUTDOWN: Browser resources released.
+Error forcing proactor loop: module 'asyncio' has no attribute 'WindowsProactorEventLoop'
+STARTUP: App version 6.0 initialized.
+SHUTDOWN: Browser resources released.
+Error forcing proactor loop: module 'asyncio' has no attribute 'WindowsProactorEventLoop'
+STARTUP: App version 6.0 initialized.
+SHUTDOWN: Browser resources released.
+Error forcing proactor loop: module 'asyncio' has no attribute 'WindowsProactorEventLoop'
+Error forcing proactor loop: module 'asyncio' has no attribute 'WindowsProactorEventLoop'
+STARTUP: App version 6.0 initialized.
+Click crash (Attempt 1): Locator.wait_for: Timeout 10000ms exceeded.
+Call log:
+  - waiting for get_by_text("ytd-video-renderer").first to be visible
+
+Click crash (Attempt 2): Locator.wait_for: Timeout 10000ms exceeded.
+Call log:
+  - waiting for get_by_text("ytd-video-renderer").first to be visible
+
+Click crash (Attempt 1): Locator.wait_for: Timeout 10000ms exceeded.
+Call log:
+  - waiting for get_by_text("ytd-video-renderer").first to be visible
+
+Click crash (Attempt 2): Locator.wait_for: Timeout 10000ms exceeded.
+Call log:
+  - waiting for get_by_text("ytd-video-renderer").first to be visible
+
+SHUTDOWN: Browser resources released.
+Error forcing proactor loop: module 'asyncio' has no attribute 'WindowsProactorEventLoop'
+STARTUP: App version 6.0 initialized.
+SHUTDOWN: Browser resources released.
+STARTUP: App version 6.0 initialized.
+Click crash (Attempt 1): Locator.wait_for: Timeout 10000ms exceeded.
+Call log:
+  - waiting for get_by_text("ytd-video-renderer").first to be visible
+
+Click crash (Attempt 2): Locator.wait_for: Timeout 10000ms exceeded.
+Call log:
+  - waiting for get_by_text("ytd-video-renderer").first to be visible
+
+Click crash (Attempt 1): Locator.wait_for: Timeout 10000ms exceeded.
+Call log:
+  - waiting for get_by_text("ytd-video-renderer").first to be visible
+
+Click crash (Attempt 2): Locator.wait_for: Timeout 10000ms exceeded.
+Call log:
+  - waiting for get_by_text("ytd-video-renderer").first to be visible
+

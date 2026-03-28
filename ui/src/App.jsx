@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
+import { Zap, Monitor, Laptop, Globe, Send } from 'lucide-react'
 
 const BACKEND_URL = 'http://127.0.0.1:8000'
 
@@ -8,7 +9,7 @@ export default function App() {
     {
       id: 1,
       role: 'ai',
-      text: "Hey! I'm AutoFlow. Ask me to move your mouse, open apps, or just chat. Type 'test the hand' to see what I can do! 🤖",
+      text: "Hey! I'm AutoFlow. Ready to help you with your desktop tasks. 🤖✨",
     },
   ])
   const [input, setInput] = useState('')
@@ -38,11 +39,9 @@ export default function App() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, isLoading])
 
-  // ── Send message ────────────────────────────────────────────────────────────
-  const sendMessage = async () => {
-    const text = input.trim()
+  // Split sendMessage logic to support direct voice trigger
+  const sendMessageDirect = async (text) => {
     if (!text || isLoading) return
-
     const userMsg = { id: Date.now(), role: 'user', text }
     setMessages((prev) => [...prev, userMsg])
     setInput('')
@@ -50,21 +49,17 @@ export default function App() {
 
     try {
       const res = await axios.post(`${BACKEND_URL}/ask`, { prompt: text })
-      const aiMsg = { id: Date.now() + 1, role: 'ai', text: res.data.result }
+      const aiResponseText = res.data.result;
+      const aiMsg = { id: Date.now() + 1, role: 'ai', text: aiResponseText }
       setMessages((prev) => [...prev, aiMsg])
     } catch (err) {
-      const errMsg = {
-        id: Date.now() + 1,
-        role: 'ai',
-        text: '⚠️ Could not reach the AutoFlow backend. Make sure `uvicorn main:app` is running on port 8000.',
-        isError: true,
-      }
-      setMessages((prev) => [...prev, errMsg])
+      setMessages(prev => [...prev, { id: Date.now(), role: 'ai', text: 'Error reaching backend.', isError: true }]);
     } finally {
       setIsLoading(false)
-      setTimeout(() => inputRef.current?.focus(), 50)
     }
   }
+
+  const sendMessage = () => sendMessageDirect(input);
 
   const handleKey = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -75,20 +70,37 @@ export default function App() {
 
   // ── Window controls (Electron IPC) ──────────────────────────────────────────
   const ipc = (() => {
-    try { return window.require('electron').ipcRenderer } catch { return null }
+    try {
+      // Better electron check
+      if (window?.process?.type === 'renderer') {
+         const { ipcRenderer } = window.require('electron');
+         return ipcRenderer;
+      }
+      return null;
+    } catch (e) {
+      return null;
+    }
   })()
 
-  const closeWindow    = () => ipc?.send('close-window')
-  const minimizeWindow = () => ipc?.send('minimize-window')
+  const closeWindow    = () => {
+    console.log('Closing window...')
+    ipc?.send('close-window')
+  }
+  const minimizeWindow = () => {
+    console.log('Minimizing window...')
+    ipc?.send('minimize-window')
+  }
   const toggleMaximize = () => {
+    console.log('Toggling maximize...')
     ipc?.send('toggle-maximize')
     setIsMaximized(v => !v)
   }
 
+
   // ── Status config ──────────────────────────────────────────────────────────
   const statusConfig = {
-    online: { dot: 'dot-online', label: 'Connected to AutoFlow', badge: 'badge-online' },
-    offline: { dot: 'dot-offline', label: 'Backend Offline', badge: 'badge-offline' },
+    online: { dot: 'dot-online', label: 'Connected', badge: 'badge-online' },
+    offline: { dot: 'dot-offline', label: 'Offline', badge: 'badge-offline' },
     checking: { dot: 'dot-checking', label: 'Connecting…', badge: 'badge-checking' },
   }
   const { dot, label, badge } = statusConfig[status]
@@ -98,7 +110,9 @@ export default function App() {
       {/* ── Title Bar ─────────────────────────────────────────────────── */}
       <div className="titlebar" data-drag-region="true">
         <div className="titlebar-left">
-          <div className="app-icon">⚡</div>
+          <div className="app-icon">
+            <Zap size={20} fill="currentColor" />
+          </div>
           <span className="app-name">AutoFlow</span>
           <div className={`status-badge ${badge}`}>
             <span className={`status-dot ${dot}`} />
@@ -120,7 +134,9 @@ export default function App() {
           {messages.map((msg) => (
             <div key={msg.id} className={`msg-row ${msg.role === 'user' ? 'msg-row-user' : 'msg-row-ai'}`}>
               {msg.role === 'ai' && (
-                <div className="avatar">⚡</div>
+                <div className="avatar">
+                  <Zap size={18} fill="currentColor" />
+                </div>
               )}
               <div className={`bubble ${msg.role === 'user' ? 'bubble-user' : 'bubble-ai'} ${msg.isError ? 'bubble-error' : ''}`}>
                 {msg.text}
@@ -131,7 +147,9 @@ export default function App() {
           {/* Typing indicator */}
           {isLoading && (
             <div className="msg-row msg-row-ai">
-              <div className="avatar">⚡</div>
+              <div className="avatar">
+                 <Zap size={18} fill="currentColor" />
+              </div>
               <div className="bubble bubble-ai typing-bubble">
                 <span className="dot-bounce" style={{ animationDelay: '0ms' }} />
                 <span className="dot-bounce" style={{ animationDelay: '150ms' }} />
@@ -145,24 +163,27 @@ export default function App() {
 
       {/* ── Input Bar ─────────────────────────────────────────────────── */}
       <div className="input-bar">
-        <textarea
-          ref={inputRef}
-          className="input-field"
-          placeholder="Ask AutoFlow to do something… (Enter to send)"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKey}
-          rows={1}
-          disabled={isLoading}
-        />
+        <div className="input-container">
+          <textarea
+            ref={inputRef}
+            className="input-field"
+            placeholder="Ask AutoFlow to do something..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKey}
+            rows={1}
+            disabled={isLoading}
+          />
+        </div>
         <button
-          className={`send-btn ${isLoading ? 'send-btn-loading' : ''}`}
+          className="send-btn"
           onClick={sendMessage}
           disabled={isLoading || !input.trim()}
         >
-          {isLoading ? '…' : '▲'}
+          {isLoading ? '…' : <Send size={20} />}
         </button>
       </div>
     </div>
   )
 }
+
