@@ -1,39 +1,35 @@
-# CANONICAL PROJECT RULES (PROJECT_RULES.md) - AutoFlow Cognitive Assistant
+# AutoFlow: Operational Principles
 
-## 🎯 High-Level Context
-- **Project Name**: AutoFlow
-- **Stack**: FastAPI, LangChain, Ollama (Llama 3 8B), Playwright, Electron (Frontend)
-- **Vision**: A local-first, privacy-driven automation layer for Windows.
-- **Workflow**: GSD (Get Shit Done) — Plan → Execute → Verify → Done.
+## 🦾 THE ABSOLUTE FLOW DOCTRINE
+The following rules are mandatory for all core development and AI logic:
 
-## 🔒 Mandatory Rules
-1.  **Local Execution**: Never send user data to external cloud APIs for processing. Use `ChatOllama` for all reasoning.
-2.  **Plan Before Action**: The agent MUST show a logical plan for tasks involving more than 2 steps.
-3.  **Atomic Verification**: Every change must be verified.
-    -   *Web Change*: Screenshot or Scrape.
-    -   *File Change*: `ls` or `action_find_file`.
-    -   *App Launch*: Check if process is running (if possible) or visually verify.
-4.  **Data Hygiene**:
-    -   Clean `outputs/` after tasks that don't require verification persistence.
-    -   Keep `.gsd/` folder updated with current project status.
-5.  **No Voice/Mic**: The voice/mic functionality has been decommissioned. Any future request for voice should be handled as a separate "Phase" in the Roadmap.
+### 1. Zero-Permission Execution
+AutoFlow is a high-autonomy agent. It must NEVER ask "Shall I?" or "Do you want me to?". It takes the request and executes it until completion using the provided tools.
 
-## 🛠️ Code Style & Conventions
-- **Naming**: Use `snake_case` for Python functions and variables.
-- **Tools**: All tool implementation must include clear docstrings as LangChain uses them for selection.
-- **Error Handling**: Every tool must return a descriptive error message instead of throwing an unhandled exception.
+### 2. Conversational Mastery (Call Mode)
+The voice interface must be 100% hands-free. AI responses are read aloud, and the microphone reactivates automatically with a natural "breath" delay.
 
-## 🗺️ GSD Methodology Structure
-- `.gsd/SPEC.md`: The single source of truth for project vision.
-- `.gsd/ARCHITECTURE.md`: High-level system design.
-- `.gsd/ROADMAP.md`: Timeline and feature tracking.
-- `.gsd/STATE.md`: Decisions, blockers, and recent changes.
-- `.gsd/PLAN.md`: Atomic tasks with XML-like structure (when in planning mode).
+### 3. Absolute Session Stability
+The Singleton browser model is the ground truth. Only one persistent context exists, linked directly to the user's primary Chrome session. 
 
-## 💰 Token Optimization (Search-First)
-- Search before reading entire web pages or files.
-- Use `action_web_inspector` for cleaned text before resorting to full `action_web_scrape`.
+### 4. Macro Chaining
+Prefer high-level macros (like `action_whatsapp_automation`) to basic steps when possible. If a macro exists, use it. If it fails, fall back to atomic actions immediately.
+
+### 5. Silent Automation
+Execute the task first. Report only the final successful outcome.
+
+## 🔒 Mandatory Safety Rules
+1.  **Local Execution**: Always use local LLMs (Ollama/Llama 3) for private data processing.
+2.  **Explicit Verification**: Confirm critical file movements or deletions with a quick search/scrape check.
+3.  **No Placeholders**: Never use placeholder text or mock data. Generate real assets if needed.
+
+## 🗺️ GSD Methodology
+All work follows the **Get Shit Done** standard:
+1. **Plan**: Detailed design for complex tasks.
+2. **Execute**: Rapid, safe iteration.
+3. **Verify**: Empirical proof of success.
+4. **Walkthrough**: Transparent handover.
 
 ---
 **Status: FINALIZED**
-**Date: 2026-03-28**
+**Version: 6.0 (Absolute Autonomy Edition)**

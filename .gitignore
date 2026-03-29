@@ -21,3 +21,8 @@ build/
 .vscode/
 .idea/
 Thumbs.db
+
+# AutoFlow Data
+autoflow_chrome_profile/
+outputs/
+

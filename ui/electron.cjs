@@ -5,6 +5,9 @@ app.commandLine.appendSwitch('disable-gpu')
 app.commandLine.appendSwitch('no-sandbox')
 app.commandLine.appendSwitch('disable-software-rasterizer')
 
+app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required')
+app.commandLine.appendSwitch('use-fake-ui-for-media-stream')
+
 const isDev = process.env.NODE_ENV !== 'production'
 
 let win = null
@@ -23,7 +26,18 @@ function createWindow() {
       nodeIntegration: true,
       contextIsolation: false,
       sandbox: false,
+      webSecurity: false,
     },
+  })
+
+  // Auto-grant permissions for Mic/Speech
+  session.defaultSession.setPermissionCheckHandler((webContents, permission) => {
+    if (permission === 'media') return true
+    return false
+  })
+  session.defaultSession.setPermissionRequestHandler((webContents, permission, callback) => {
+    if (permission === 'media') callback(true)
+    else callback(false)
   })
 
 
